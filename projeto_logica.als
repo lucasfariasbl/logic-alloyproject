@@ -20,6 +20,9 @@ one sig MelhorCancao extends Categoria { indicados: set Cancao }
 
 // REGRAS
 fact GrammyRules {
+  // Cada canção pode fazer parte de no máximo 2 álbuns
+  all c: Cancao | #(c.~composicao) <= 2
+
   // Todas as categorias compõem o universo de categorias
   Categoria = MelhorArtistaBanda + MelhorAlbum + MelhorColaboracao + MelhorCancao
 
