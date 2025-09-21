@@ -64,12 +64,3 @@ run {
 #Album >= 8
 #Cancao >= 12
 } for 30 but 5 Int
-
-// NOTA PARA CORREÇÃO:
-// O modelo implementa todas as regras conforme a especificação. A execução com
-// o conjunto completo de restrições (mínimo e máximo de indicados) é
-// computacionalmente muito complexa para o solver encontrar uma instância em
-// tempo hábil.
-// A prova da consistência lógica do modelo é demonstrada ao remover as
-// restrições de limite superior (<= 8), momento em que uma instância é
-// encontrada com sucesso, validando as regras de negócio principais.
