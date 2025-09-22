@@ -58,9 +58,36 @@ fact MetadeDasCancoesIndicadasEmAlbunsIndicados {
   }
 }
 
+// --- ASSERÇÕES ---
+// As asserções verificam se propriedades esperadas são sempre verdadeiras no modelo.
+
+// Esta asserção verifica se um álbum indicado pode ser de um artista que não foi indicado.
+// O Alloy deve encontrar um contra-exemplo, mostrando que a especificação permite isso.
+assert ChecaProprietarioDeAlbumIndicado {
+    // Para todo álbum indicado, o artista proprietário do álbum também deve estar indicado.
+    all a: MelhorAlbum.indicados | a.propriedade in MelhorArtistaBanda.indicados
+}
+
+// Esta asserção verifica se todo artista indicado possui de fato alguma canção
+// associada a ele através de um de seus álbuns indicados.
+// Dada a regra "RelacaoArtistaAlbumIndicados" e a estrutura de "Album",
+// esta asserção deve ser sempre válida (nenhum contra-exemplo encontrado).
+assert ChecaSeArtistaIndicadoTemCancao {
+    all art: MelhorArtistaBanda.indicados | // Para todo artista indicado...
+        // ...existe algum álbum indicado que seja de sua propriedade...
+        some alb: MelhorAlbum.indicados | alb.propriedade = art and
+        // ...e esse álbum possui alguma canção.
+        some alb.composicao
+}
+
 // COMANDO PARA EXECUTAR
 run {
 #Artista >= 8
 #Album >= 8
 #Cancao >= 12
-} for 30 but 5 Int
+} for 30 but 8 Int
+
+// --- COMANDOS CHECK ---
+// Para rodar, vá no menu "Execute" e escolha um dos "Check..."
+check ChecaSeArtistaIndicadoTemCancao for 15 but 8 int
+check ChecaProprietarioDeAlbumIndicado for 15 but 8 int
